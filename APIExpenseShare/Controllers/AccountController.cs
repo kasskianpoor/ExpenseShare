@@ -24,12 +24,12 @@ public class AccountController : BasicApiController
         var user = new User
         {
             UserName = registerDto.Username,
-            DateOfBirth = registerDto.DateOfBirth
+            DateOfBirth = registerDto.DateOfBirth,
+            Email = registerDto.Email
         };
 
         var userAccount = new UserAccountDetail
         {
-            Email = registerDto.Email,
             PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password)),
             PasswordSalt = hmac.Key,
             User = user

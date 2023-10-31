@@ -29,6 +29,10 @@ namespace APIExpenseShare.Data.Migrations
                     b.Property<DateOnly?>("DateOfBirth")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<int?>("UserAccountDetailId")
                         .HasColumnType("INTEGER");
 
@@ -36,6 +40,9 @@ namespace APIExpenseShare.Data.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
 
                     b.ToTable("Users");
                 });
@@ -45,10 +52,6 @@ namespace APIExpenseShare.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
 
                     b.Property<int>("NumberOfFailedAttempts")
                         .HasColumnType("INTEGER");
@@ -65,9 +68,6 @@ namespace APIExpenseShare.Data.Migrations
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Email")
-                        .IsUnique();
 
                     b.HasIndex("UserId")
                         .IsUnique();

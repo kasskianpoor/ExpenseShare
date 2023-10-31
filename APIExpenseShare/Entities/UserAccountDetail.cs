@@ -1,13 +1,10 @@
 ﻿using System.Text.Json.Serialization;
-using Microsoft.EntityFrameworkCore;
 
 namespace APIExpenseShare.Entities;
 
-[Index(nameof(Email), IsUnique = true)]
 public class UserAccountDetail
 {
     public int Id { get; set; }
-    public required string Email { get; set; }
     public required byte[] PasswordHash { get; set; }
     public required byte[] PasswordSalt { get; set; }
 

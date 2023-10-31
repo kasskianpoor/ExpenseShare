@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace APIExpenseShare.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20231031220041_UpdatedUserDataRelDb")]
-    partial class UpdatedUserDataRelDb
+    [Migration("20231031225345_NewDbStuctureMigration")]
+    partial class NewDbStuctureMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,10 +32,20 @@ namespace APIExpenseShare.Data.Migrations
                     b.Property<DateOnly?>("DateOfBirth")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("UserAccountDetailId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("UserName")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
 
                     b.ToTable("Users");
                 });
@@ -45,10 +55,6 @@ namespace APIExpenseShare.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
 
                     b.Property<int>("NumberOfFailedAttempts")
                         .HasColumnType("INTEGER");
@@ -65,9 +71,6 @@ namespace APIExpenseShare.Data.Migrations
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Email")
-                        .IsUnique();
 
                     b.HasIndex("UserId")
                         .IsUnique();

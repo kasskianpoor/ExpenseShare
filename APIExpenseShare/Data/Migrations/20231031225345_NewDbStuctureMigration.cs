@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace APIExpenseShare.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreateUserDb : Migration
+    public partial class NewDbStuctureMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -32,9 +32,10 @@ namespace APIExpenseShare.Data.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    UserName = table.Column<int>(type: "INTEGER", nullable: false),
+                    UserName = table.Column<string>(type: "TEXT", nullable: true),
+                    Email = table.Column<string>(type: "TEXT", nullable: false),
                     DateOfBirth = table.Column<DateOnly>(type: "TEXT", nullable: true),
-                    UserAccountDetailId = table.Column<int>(type: "INTEGER", nullable: false),
+                    UserAccountDetailId = table.Column<int>(type: "INTEGER", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
@@ -48,8 +49,8 @@ namespace APIExpenseShare.Data.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Email = table.Column<int>(type: "INTEGER", nullable: false),
-                    Password = table.Column<int>(type: "INTEGER", nullable: false),
+                    PasswordHash = table.Column<byte[]>(type: "BLOB", nullable: false),
+                    PasswordSalt = table.Column<byte[]>(type: "BLOB", nullable: false),
                     NumberOfFailedAttempts = table.Column<int>(type: "INTEGER", nullable: false),
                     UserId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
@@ -68,6 +69,12 @@ namespace APIExpenseShare.Data.Migrations
                 name: "IX_UserAccountDetails_UserId",
                 table: "UserAccountDetails",
                 column: "UserId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_Email",
+                table: "Users",
+                column: "Email",
                 unique: true);
         }
 
