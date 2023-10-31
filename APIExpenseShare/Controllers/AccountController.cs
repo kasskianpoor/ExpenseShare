@@ -4,6 +4,7 @@ using System.Text;
 using APIExpenseShare.Data;
 using APIExpenseShare.Entities;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace APIExpenseShare;
 
@@ -21,11 +22,14 @@ public class AccountController : BasicApiController
     {
         using var hmac = new HMACSHA512();
 
+        var userExists = await _context.Users.AnyAsync(x => x.Email.ToLower() == registerDto.Email.ToLower());
+        if (userExists) return BadRequest("User with this Email already exists");
+
         var user = new User
         {
             UserName = registerDto.Username,
             DateOfBirth = registerDto.DateOfBirth,
-            Email = registerDto.Email
+            Email = registerDto.Email.ToLower()
         };
 
         var userAccount = new UserAccountDetail
