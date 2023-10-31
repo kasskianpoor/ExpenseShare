@@ -1,6 +1,6 @@
 ﻿namespace APIExpenseShare.Entities;
 
-public class UserNotificationInfo
+public class UserNotificationDetail
 {
     public int Id { get; set; }
     // We 
