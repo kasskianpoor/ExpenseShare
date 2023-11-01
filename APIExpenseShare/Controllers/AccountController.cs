@@ -75,7 +75,7 @@ public class AccountController : BasicApiController
     [HttpDelete("purgeuser")]
     public async Task<ActionResult<User>> PurgeUser(PurgeUserDto purgeUserDto)
     {
-        var user = await _context.Users.SingleOrDefaultAsync(xUser => (xUser.Email == purgeUserDto.Email && xUser.Id == purgeUserDto.UserId));
+        var user = await _context.Users.SingleOrDefaultAsync(xUser => xUser.Email == purgeUserDto.Email && xUser.Id == purgeUserDto.UserId);
         if (user == null) return BadRequest("User with this Email does not exist!");
 
         _context.Remove(user);
