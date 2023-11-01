@@ -7,6 +7,4 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'ExpenseShare';
-  isLoginSelected = true;
-  cardTitle = this.isLoginSelected ? 'Login' : 'Sign up';
 }
