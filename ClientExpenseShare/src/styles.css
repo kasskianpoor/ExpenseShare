@@ -8,3 +8,73 @@ body {
   background-color: #696868;
   color: antiquewhite;
 }
+
+.layout-container {
+  width: 100%;
+}
+
+.sidebar {
+  color: white;
+  background-color: black;
+  height: 100vh;
+  position: fixed;
+}
+
+.sidebar-width {
+  width: 20%;
+}
+
+.sidebar-logo {
+  width: 200px;
+}
+
+.sidebar-logo-container {
+  width: 100%;
+  height: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.nav-item {
+  cursor: pointer;
+  list-style-type: none;
+}
+
+.active {
+  color: rgb(9, 25, 255);
+  background-color: #aca8a8;
+  font-weight: bolder;
+  opacity: 0.5;
+}
+
+.nav-item:hover {
+  background-color: #696868;
+}
+
+ul.nav-list {
+  width: 100%;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+#page-container {
+  padding: 20px;
+}
+
+@media (max-width: 1000px) {
+  .sidebar-width {
+    width: 30%;
+  }
+}
+
+@media (max-width: 800px) {
+  .sidebar-width {
+    width: 40%;
+  }
+}
+.nav-link {
+  margin: 0;
+  padding: 10px;
+}

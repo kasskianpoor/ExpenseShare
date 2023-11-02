@@ -7,6 +7,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { FormsModule } from '@angular/forms';
+import { NavComponent } from './nav/nav.component';
 
 @NgModule({
   declarations: [
@@ -14,8 +16,9 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     LoginComponent,
     SignupComponent,
     DashboardComponent,
+    NavComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, NgbModule],
+  imports: [BrowserModule, AppRoutingModule, NgbModule, FormsModule],
   providers: [],
   bootstrap: [AppComponent],
 })
