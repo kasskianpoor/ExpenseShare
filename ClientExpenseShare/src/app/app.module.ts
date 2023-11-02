@@ -9,6 +9,7 @@ import { SignupComponent } from './signup/signup.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { FormsModule } from '@angular/forms';
 import { NavComponent } from './nav/nav.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,13 @@ import { NavComponent } from './nav/nav.component';
     DashboardComponent,
     NavComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, NgbModule, FormsModule],
+  imports: [
+    HttpClientModule,
+    BrowserModule,
+    AppRoutingModule,
+    NgbModule,
+    FormsModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })
