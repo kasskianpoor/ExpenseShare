@@ -1,7 +1,6 @@
 import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { AccountService } from './_services/account.service';
-import { UserTokenData } from './_types/UserTokenData';
-import { Observable, of } from 'rxjs';
+import { localStorageItemKeys } from './_constants';
 
 @Component({
   selector: 'app-root',
@@ -17,8 +16,8 @@ export class AppComponent implements OnInit {
   }
 
   setCurrentUser() {
-    const username = localStorage.getItem('username');
-    const token = localStorage.getItem('token');
+    const username = localStorage.getItem(localStorageItemKeys.username);
+    const token = localStorage.getItem(localStorageItemKeys.token);
     if (username && token) {
       const user = {
         username,
