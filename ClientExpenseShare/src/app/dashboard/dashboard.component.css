@@ -1,0 +1,33 @@
+.page-title {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 5px solid;
+  border-color: #1118ce;
+}
+
+.temp-empty-section {
+  min-height: 100px;
+  border-style: dotted;
+  border-color: rgb(114, 112, 112);
+  border-radius: 20px;
+}
+
+.temp-empty-section-lg {
+  min-height: 200px;
+  border-style: dotted;
+  border-color: rgb(114, 112, 112);
+  border-radius: 20px;
+}
+
+.empty-section-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgb(187, 189, 189);
+  opacity: 0.8;
+}
+
+.empty-section-info:hover {
+  background-color: rgb(158, 158, 158);
+  opacity: 0.4;
+}
