@@ -230,3 +230,5 @@ _Pvt_Extensions
 # FAKE - F# Make
 .fake/
 APIExpenseShare/appsettings.json
+APIExpenseShare/ExpenseShare.db-shm
+APIExpenseShare/ExpenseShare.db-wal
