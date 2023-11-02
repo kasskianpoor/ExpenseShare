@@ -21,7 +21,7 @@ public class AccountController : BasicApiController
     }
 
     [HttpPost("register")] // api/account/register
-    public async Task<ActionResult<User>> Register(RegisterDto registerDto)
+    public async Task<ActionResult<UserTokenDto>> Register(RegisterDto registerDto)
     {
         using var hmac = new HMACSHA512();
 
@@ -49,7 +49,11 @@ public class AccountController : BasicApiController
         user.UserAccountDetailId = userAccount.Id;
         await _context.SaveChangesAsync();
 
-        return user;
+        return new UserTokenDto
+        {
+            Username = user.UserName ?? user.Email,
+            Token = _tokenService.CreateToken(user)
+        };
     }
 
     [HttpPost("login")]
