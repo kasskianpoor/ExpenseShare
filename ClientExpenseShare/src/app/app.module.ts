@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { NavComponent } from './nav/nav.component';
 import { HttpClientModule } from '@angular/common/http';
 import { LogoutComponent } from './logout/logout.component';
+import { NotfoundComponent } from './notfound/notfound.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { LogoutComponent } from './logout/logout.component';
     DashboardComponent,
     NavComponent,
     LogoutComponent,
+    NotfoundComponent,
   ],
   imports: [
     HttpClientModule,
