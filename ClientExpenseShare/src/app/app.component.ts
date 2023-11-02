@@ -1,6 +1,7 @@
 import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { AccountService } from './_services/account.service';
 import { UserTokenData } from './_types/UserTokenData';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -9,12 +10,10 @@ import { UserTokenData } from './_types/UserTokenData';
 })
 export class AppComponent implements OnInit {
   title = 'ExpenseShare';
-  isUserLoggedIn = false;
 
   constructor(public accountService: AccountService) {}
   ngOnInit(): void {
     this.setCurrentUser();
-    this.getCurrentUser();
   }
 
   setCurrentUser() {
@@ -28,13 +27,5 @@ export class AppComponent implements OnInit {
       this.accountService.setCurrentUser(user);
     }
     return;
-  }
-
-  getCurrentUser() {
-    this.accountService.currentUser$.subscribe({
-      next: (user) => {
-        this.isUserLoggedIn = !!user;
-      },
-    });
   }
 }
