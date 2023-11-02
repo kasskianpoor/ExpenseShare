@@ -50,6 +50,11 @@ export class AccountService {
 
   logout() {
     // TODO: send a request to backend to logout, so the refreshToken doesn't work anymore
+    // include below code in pipe map
+    localStorage.removeItem(localStorageItemKeys.username);
+    localStorage.removeItem(localStorageItemKeys.token);
+    localStorage.removeItem(localStorageItemKeys.refreshToken);
+    this.setCurrentUser(null);
   }
 
   signup(userSignUpInfo: UserSignUpInfo) {

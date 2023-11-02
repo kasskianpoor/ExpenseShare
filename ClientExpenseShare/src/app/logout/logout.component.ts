@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { paths } from '../_constants';
+import { localStorageItemKeys, paths } from '../_constants';
 import { AccountService } from '../_services/account.service';
 
 @Component({
