@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { UserCredentials } from '../_types/UserCredentials';
 import { AccountService } from '../_services/account.service';
+import { Router } from '@angular/router';
+import { paths } from '../_constants';
 
 @Component({
   selector: 'app-login',
@@ -14,20 +16,17 @@ export class LoginComponent implements OnInit {
   };
   loggedIn = false;
 
-  constructor(private accountService: AccountService) {}
+  constructor(private accountService: AccountService, private router: Router) {}
 
   ngOnInit(): void {}
 
   login(): void {
-    console.log('====================================');
-    console.log(this.userCredentials.email);
-    console.log(this.userCredentials.password, 'password');
-    console.log('====================================');
     this.accountService.login(this.userCredentials).subscribe({
       next: (resp) => {
         console.log('====================================');
         console.log('resp', resp);
         console.log('====================================');
+        this.router.navigate([paths.dashboard]);
       },
       error: (error) => {
         console.log('====================================');
