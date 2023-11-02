@@ -3,6 +3,7 @@ using System.Text;
 using APIExpenseShare.Data;
 using APIExpenseShare.DTOs;
 using APIExpenseShare.Entities;
+using APIExpenseShare.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,10 +12,12 @@ namespace APIExpenseShare;
 public class AccountController : BasicApiController
 {
     private readonly DataContext _context;
+    private readonly ITokenService _tokenService;
 
-    public AccountController(DataContext context)
+    public AccountController(DataContext context, ITokenService tokenService)
     {
         _context = context;
+        _tokenService = tokenService;
     }
 
     [HttpPost("register")] // api/account/register
@@ -50,7 +53,7 @@ public class AccountController : BasicApiController
     }
 
     [HttpPost("login")]
-    public async Task<ActionResult<string>> Login(LoginDto loginDto)
+    public async Task<ActionResult<UserTokenDto>> Login(LoginDto loginDto)
     {
         var user = await _context.Users.SingleOrDefaultAsync(xUser => xUser.Email.ToLower().Trim() == loginDto.Email.ToLower().Trim());
         if (user == null) return Unauthorized("Account with the combination of this email and passowrd does not exist!");
@@ -69,7 +72,11 @@ public class AccountController : BasicApiController
             }
         }
 
-        return user.Email;
+        return new UserTokenDto
+        {
+            Username = user.UserName ?? user.Email,
+            Token = _tokenService.CreateToken(user)
+        };
     }
 
     [HttpDelete("purgeuser")]
