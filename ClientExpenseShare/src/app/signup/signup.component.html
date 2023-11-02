@@ -8,28 +8,46 @@
       <div class="row mb-3 pt-2">
         <div class="col-12 pr-3 pl-3 pt-3">
           <label for="inputUserName" class="form-label">Username</label>
-          <input type="email" class="form-control" id="inputUserName" />
+          <input
+            [(ngModel)]="userSignupInfo.username"
+            type="text"
+            class="form-control"
+            id="inputUserName"
+          />
         </div>
         <div class="col-12 pr-3 pl-3 pt-3">
           <label for="inputEmail4" class="form-label">Email</label>
-          <input type="password" class="form-control" id="inputEmail4" />
+          <input
+            [(ngModel)]="userSignupInfo.email"
+            type="email"
+            class="form-control"
+            id="inputEmail4"
+          />
         </div>
         <div class="col-12 pr-3 pl-3 pt-3">
           <label for="inputPassword4" class="form-label">Password</label>
-          <input type="password" class="form-control" id="inputPassword4" />
+          <input
+            [(ngModel)]="userSignupInfo.password"
+            type="password"
+            class="form-control"
+            id="inputPassword4"
+          />
         </div>
         <div class="col-12 pr-3 pl-3 pt-3">
           <label for="inputPasswordConfirm" class="form-label"
             >Confirm Password</label
           >
           <input
+            [(ngModel)]="confirmedPassword"
             type="password"
             class="form-control"
             id="inputPasswordConfirm"
           />
         </div>
         <div id="stretch" class="pt-5">
-          <button href="#" class="btn btn-primary">Create Account</button>
+          <button class="btn btn-primary" (click)="signUp()">
+            Create Account
+          </button>
           <div class="mt-2" style="text-align: center">
             Already have an account? <a routerLink="/login">Login</a>
           </div>

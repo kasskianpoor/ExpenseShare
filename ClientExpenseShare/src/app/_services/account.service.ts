@@ -4,6 +4,7 @@ import { UserCredentials } from '../_types/UserCredentials';
 import { localStorageItemKeys, mainBackendUrl } from '../_constants';
 import { BehaviorSubject, map } from 'rxjs';
 import { UserTokenData } from '../_types/UserTokenData';
+import { UserSignUpInfo } from '../_types/UserSignUpInfo';
 
 @Injectable({
   providedIn: 'root',
@@ -49,5 +50,32 @@ export class AccountService {
     localStorage.removeItem(localStorageItemKeys.token);
     localStorage.removeItem(localStorageItemKeys.refreshToken);
     this.currentUserSource.next(null);
+  }
+
+  signup(userSignUpInfo: UserSignUpInfo) {
+    return this.http
+      .post<UserTokenData>(
+        `${mainBackendUrl}/api/account/register`,
+        userSignUpInfo
+      )
+      .pipe(
+        map((response: UserTokenData) => {
+          console.log(response);
+
+          if (response) {
+            localStorage.setItem(
+              localStorageItemKeys.username,
+              response.username
+            );
+            localStorage.setItem(localStorageItemKeys.token, response.token);
+            localStorage.setItem(
+              localStorageItemKeys.refreshToken,
+              response.token
+            );
+            // TODO: also set a refreshToken
+            this.currentUserSource.next(response);
+          }
+        })
+      );
   }
 }
