@@ -1,4 +1,4 @@
-<div class="layout-container d-flex">
+<div *ngIf="isUserLoggedIn" class="layout-container d-flex">
   <div class="sidebar-width">
     <app-nav></app-nav>
   </div>
@@ -6,3 +6,4 @@
     <router-outlet></router-outlet>
   </div>
 </div>
+<router-outlet *ngIf="!isUserLoggedIn"></router-outlet>

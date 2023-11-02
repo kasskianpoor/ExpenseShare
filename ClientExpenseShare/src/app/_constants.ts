@@ -7,3 +7,9 @@ export const paths = {
   signup: 'signup',
   404: '**',
 };
+
+export const localStorageItemKeys = {
+  username: 'username',
+  token: 'token',
+  refreshToken: 'refreshToken',
+};
