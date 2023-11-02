@@ -22,9 +22,9 @@ const routes: Routes = [
         pathMatch: 'full',
       },
       { path: paths.logout, component: LogoutComponent, pathMatch: 'full' },
+      { path: paths[404], component: NotfoundComponent, pathMatch: 'full' },
     ],
   },
-  { path: paths[404], component: NotfoundComponent, pathMatch: 'full' },
 ];
 
 @NgModule({
