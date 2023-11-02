@@ -21,15 +21,12 @@ export class LoginComponent implements OnInit {
 
   login(): void {
     this.accountService.login(this.userCredentials).subscribe({
-      next: (resp) => {
-        console.log('====================================');
-        console.log('resp', resp);
-        console.log('====================================');
+      next: () => {
         this.router.navigate([paths.dashboard]);
       },
       error: (error) => {
         console.log('====================================');
-        console.log(error, 'errrrrrr');
+        console.log(error);
         console.log('====================================');
       },
     });
