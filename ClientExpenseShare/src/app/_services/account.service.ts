@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { UserCredentials } from '../_types/UserCredentials';
 import { localStorageItemKeys, mainBackendUrl } from '../_constants';
-import { BehaviorSubject, map } from 'rxjs';
+import { BehaviorSubject, Observable, map } from 'rxjs';
 import { UserTokenData } from '../_types/UserTokenData';
 import { UserSignUpInfo } from '../_types/UserSignUpInfo';
 
@@ -34,22 +34,22 @@ export class AccountService {
               response.token
             );
             // TODO: also set a refreshToken
-            this.currentUserSource.next(response);
+            this.setCurrentUser(response);
           }
         })
       );
   }
 
-  setCurrentUser(user: UserTokenData) {
+  setCurrentUser(user: UserTokenData | null) {
     this.currentUserSource.next(user);
+  }
+
+  getCurrentUser(): Observable<UserTokenData | null> {
+    return this.currentUser$;
   }
 
   logout() {
     // TODO: send a request to backend to logout, so the refreshToken doesn't work anymore
-    localStorage.removeItem(localStorageItemKeys.username);
-    localStorage.removeItem(localStorageItemKeys.token);
-    localStorage.removeItem(localStorageItemKeys.refreshToken);
-    this.currentUserSource.next(null);
   }
 
   signup(userSignUpInfo: UserSignUpInfo) {
@@ -60,8 +60,6 @@ export class AccountService {
       )
       .pipe(
         map((response: UserTokenData) => {
-          console.log(response);
-
           if (response) {
             localStorage.setItem(
               localStorageItemKeys.username,
@@ -73,7 +71,7 @@ export class AccountService {
               response.token
             );
             // TODO: also set a refreshToken
-            this.currentUserSource.next(response);
+            this.setCurrentUser(response);
           }
         })
       );
