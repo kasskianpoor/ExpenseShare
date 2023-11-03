@@ -5,6 +5,6 @@ public class Expense
 {
     public int Id { get; set; }
     public double Amount { get; set; }
-    [ForeignKey("User")]
+    public required User PaidByUser { get; set; }
     public int PaidByUserId { get; set; }
 }

@@ -4,6 +4,7 @@ using APIExpenseShare.DTOs;
 using APIExpenseShare.Entities;
 using APIExpenseShare.Interfaces;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,11 +18,40 @@ public class GroupsController : AuthorizedOnlyControllerBase
         this.context = context;
     }
 
-    // [HttpGet]
-    // public async Task<ActionResult<>> GetGroups() 
-    // {
-    //     var groups = await this.context.Groups.Where(x => x.);
-    // }
+    [HttpGet]
+    public async Task<ActionResult<GroupsDto>> GetGroups()
+    {
+        var token = await HttpContext.AuthenticateAsync();
+        if (token == null) return Unauthorized();
+        var user_id = Convert.ToInt32(token.Principal!.Claims.FirstOrDefault(x => x.Type == "user_id")!.Value);
+        var usersGroup = await this.context.Users
+            .Where(xUser => xUser.Id == user_id)
+            .Select(xUser => new
+            {
+                Groups = xUser.Groups
+            })
+            .ToListAsync();
+
+        return new GroupsDto
+        {
+            PageNumber = 0,
+            TotalNumOfPages = 0,
+            Groups = usersGroup[0].Groups
+        };
+    }
+
+    [HttpGet("{id}")]
+    public async Task<ActionResult<Group>> GetGroup(int id)
+    {
+        var token = await HttpContext.AuthenticateAsync();
+        if (token == null) return Unauthorized();
+        var user_id = Convert.ToInt32(token.Principal!.Claims.FirstOrDefault(x => x.Type == "user_id")!.Value);
+        var group = await this.context.Groups
+            .SingleOrDefaultAsync(xGroup => xGroup.Id == id);
+
+        if (group == null) return BadRequest("Group with this id was not found");
+        return group!;
+    }
 
     [HttpPost]
     public async Task<ActionResult<Group>> CreateGroup(CreateGroupInputDto createGroupInputDto)
@@ -46,4 +76,20 @@ public class GroupsController : AuthorizedOnlyControllerBase
         return group;
     }
 
+    [HttpDelete]
+    public async Task<ActionResult<Group>> DeleteGroup(DeleteIdInputDto deleteIdInputDto)
+    {
+        var group = await this.context.Groups.SingleOrDefaultAsync(xGroup => xGroup.Id == deleteIdInputDto.Id);
+        if (group == null) return BadRequest();
+
+        this.context.Groups.Remove(group);
+        await this.context.SaveChangesAsync();
+        return Ok(group);
+    }
+
+    // [HttpPost("/add")]
+    // public async Task<ActionResult<Group>> AddGroupMember(GroupMemberInputDto groupMemberInputDto)
+    // {
+
+    // }
 }
