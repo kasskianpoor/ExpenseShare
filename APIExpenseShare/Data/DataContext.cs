@@ -17,9 +17,9 @@ public class DataContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<User>()
-            .HasOne(p => p.UserAccountDetail)
-            .WithOne(b => b.User)
-            .HasForeignKey<UserAccountDetail>(p => p.UserId);
+        // modelBuilder.Entity<User>()
+        //     .HasOne(p => p.UserAccountDetail)
+        //     .WithOne(b => b.User)
+        //     .HasForeignKey<UserAccountDetail>(p => p.UserId);
     }
 }

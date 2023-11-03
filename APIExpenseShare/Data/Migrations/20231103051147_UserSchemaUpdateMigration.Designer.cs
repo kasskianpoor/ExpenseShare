@@ -3,6 +3,7 @@ using System;
 using APIExpenseShare.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,54 +11,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace APIExpenseShare.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20231103051147_UserSchemaUpdateMigration")]
+    partial class UserSchemaUpdateMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.13");
-
-            modelBuilder.Entity("APIExpenseShare.Entities.Expense", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<double>("Amount")
-                        .HasColumnType("REAL");
-
-                    b.Property<int?>("GroupId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("PaidByUserId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int?>("UserId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("GroupId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Expense");
-                });
-
-            modelBuilder.Entity("APIExpenseShare.Entities.Group", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Group");
-                });
 
             modelBuilder.Entity("APIExpenseShare.Entities.User", b =>
                 {
@@ -137,32 +98,6 @@ namespace APIExpenseShare.Data.Migrations
                     b.ToTable("UserNotificationDetails");
                 });
 
-            modelBuilder.Entity("GroupUser", b =>
-                {
-                    b.Property<int>("GroupsId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("UsersId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("GroupsId", "UsersId");
-
-                    b.HasIndex("UsersId");
-
-                    b.ToTable("GroupUser");
-                });
-
-            modelBuilder.Entity("APIExpenseShare.Entities.Expense", b =>
-                {
-                    b.HasOne("APIExpenseShare.Entities.Group", null)
-                        .WithMany("Expenses")
-                        .HasForeignKey("GroupId");
-
-                    b.HasOne("APIExpenseShare.Entities.User", null)
-                        .WithMany("Expenses")
-                        .HasForeignKey("UserId");
-                });
-
             modelBuilder.Entity("APIExpenseShare.Entities.UserAccountDetail", b =>
                 {
                     b.HasOne("APIExpenseShare.Entities.User", "User")
@@ -174,30 +109,8 @@ namespace APIExpenseShare.Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("GroupUser", b =>
-                {
-                    b.HasOne("APIExpenseShare.Entities.Group", null)
-                        .WithMany()
-                        .HasForeignKey("GroupsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("APIExpenseShare.Entities.User", null)
-                        .WithMany()
-                        .HasForeignKey("UsersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("APIExpenseShare.Entities.Group", b =>
-                {
-                    b.Navigation("Expenses");
-                });
-
             modelBuilder.Entity("APIExpenseShare.Entities.User", b =>
                 {
-                    b.Navigation("Expenses");
-
                     b.Navigation("UserAccountDetail")
                         .IsRequired();
                 });

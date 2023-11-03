@@ -13,6 +13,6 @@ public class UserAccountDetail
     public int NumberOfFailedAttempts { get; set; }
 
     public int UserId { get; set; }
-    [JsonIgnore]
+    // [JsonIgnore]
     public User User { get; set; } = null!;
 }
