@@ -7,4 +7,5 @@ public class Expense
     public double Amount { get; set; }
     public required User PaidByUser { get; set; }
     public int PaidByUserId { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 }
