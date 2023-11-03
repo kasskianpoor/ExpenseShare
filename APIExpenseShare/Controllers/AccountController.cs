@@ -32,21 +32,16 @@ public class AccountController : BasicApiController
         {
             UserName = registerDto.Username,
             DateOfBirth = registerDto.DateOfBirth,
-            Email = registerDto.Email.ToLower()
+            Email = registerDto.Email.ToLower(),
+            UserAccountDetail = new UserAccountDetail
+            {
+                PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password)),
+                PasswordSalt = hmac.Key,
+            }
         };
 
-        var userAccount = new UserAccountDetail
-        {
-            PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password)),
-            PasswordSalt = hmac.Key,
-            User = user
-        };
 
         _context.Users.Add(user);
-        _context.UserAccountDetails.Add(userAccount);
-        await _context.SaveChangesAsync();
-
-        user.UserAccountDetailId = userAccount.Id;
         await _context.SaveChangesAsync();
 
         return new UserTokenDto
