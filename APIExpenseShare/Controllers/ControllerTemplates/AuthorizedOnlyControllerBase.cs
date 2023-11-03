@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace APIExpenseShare;
+namespace APIExpenseShare.Controllers;
 
 [Authorize]
 [ApiController]
