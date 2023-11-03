@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 
 namespace APIExpenseShare.Entities;
@@ -12,7 +13,9 @@ public class User
     public DateOnly? DateOfBirth { get; set; }
     [Required]
     public required UserAccountDetail UserAccountDetail { get; set; }
+    [JsonIgnore]
     public List<Group>? Groups { get; set; }
+    [JsonIgnore]
     public List<Expense>? Expenses { get; set; }
 
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
