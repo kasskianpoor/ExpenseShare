@@ -1,8 +1,6 @@
-using System.Security.Claims;
 using APIExpenseShare.Data;
 using APIExpenseShare.DTOs;
 using APIExpenseShare.Entities;
-using APIExpenseShare.Interfaces;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
@@ -40,19 +38,6 @@ public class GroupsController : AuthorizedOnlyControllerBase
         };
     }
 
-    [HttpGet("{id}")]
-    public async Task<ActionResult<Group>> GetGroup(int id)
-    {
-        var token = await HttpContext.AuthenticateAsync();
-        if (token == null) return Unauthorized();
-        var user_id = Convert.ToInt32(token.Principal!.Claims.FirstOrDefault(x => x.Type == "user_id")!.Value);
-        var group = await this.context.Groups
-            .SingleOrDefaultAsync(xGroup => xGroup.Id == id);
-
-        if (group == null) return BadRequest("Group with this id was not found");
-        return group!;
-    }
-
     [HttpPost]
     public async Task<ActionResult<Group>> CreateGroup(CreateGroupInputDto createGroupInputDto)
     {
@@ -87,9 +72,18 @@ public class GroupsController : AuthorizedOnlyControllerBase
         return Ok(group);
     }
 
-    // [HttpPost("/add")]
-    // public async Task<ActionResult<Group>> AddGroupMember(GroupMemberInputDto groupMemberInputDto)
-    // {
+    [HttpGet("{id}/members")]
+    public async Task<ActionResult<Group>> GetGroup(int id)
+    {
+        var token = await HttpContext.AuthenticateAsync();
+        if (token == null) return Unauthorized();
+        var user_id = Convert.ToInt32(token.Principal!.Claims.FirstOrDefault(x => x.Type == "user_id")!.Value);
+        var group = await this.context.Groups
+            .Where(group => group.Id == id)
+            .Include(group => group.Users)
+            .FirstOrDefaultAsync();
 
-    // }
+        if (group == null) return BadRequest("Group with this id was not found");
+        return group;
+    }
 }
