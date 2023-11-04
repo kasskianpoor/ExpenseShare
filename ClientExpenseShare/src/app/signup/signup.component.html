@@ -11,6 +11,7 @@
           <input
             [(ngModel)]="userSignupInfo.username"
             type="text"
+            (keyup.enter)="signUp()"
             class="form-control"
             id="inputUserName"
           />
@@ -20,6 +21,7 @@
           <input
             [(ngModel)]="userSignupInfo.email"
             type="email"
+            (keyup.enter)="signUp()"
             class="form-control"
             id="inputEmail4"
           />
@@ -29,6 +31,7 @@
           <input
             [(ngModel)]="userSignupInfo.password"
             type="password"
+            (keyup.enter)="signUp()"
             class="form-control"
             id="inputPassword4"
           />
@@ -40,6 +43,7 @@
           <input
             [(ngModel)]="confirmedPassword"
             type="password"
+            (keyup.enter)="signUp()"
             class="form-control"
             id="inputPasswordConfirm"
           />
