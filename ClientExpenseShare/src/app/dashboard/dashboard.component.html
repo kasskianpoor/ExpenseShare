@@ -1,9 +1,45 @@
 <div class="page-title">
   <h1>Dashboard</h1>
 </div>
-<div class="temp-empty-section mt-3 empty-section-info">
-  <p>Click here to add those who you share the expense with!</p>
+<div>
+  <p *ngFor="let group of groups; index as i; first as isFirst">group</p>
 </div>
-<div class="temp-empty-section-lg mt-3 empty-section-info">
-  <p>Click here to add expenses who you share the expense with!</p>
+<div
+  class="temp-empty-section mt-3 empty-section-info w-25"
+  (click)="openModal(content)"
+>
+  <p class="p-2 m-0 overflow-auto">Click here to add your group!</p>
 </div>
+
+<ng-template class="general-modal" #content let-modal>
+  <div class="general-modal">
+    <div class="modal-header">
+      <h4 class="modal-title">Create a Group!</h4>
+    </div>
+    <div class="modal-body">
+      <label for="groupName" class="form-label"
+        >Enter the name of the group:</label
+      >
+      <input
+        [(ngModel)]="newGroup.groupName"
+        type="text"
+        (keyup.enter)="createGroup()"
+        class="form-control bg-light"
+        id="groupName"
+        style="color: black"
+      />
+    </div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-outline-danger"
+        (click)="modal.close('Close click')"
+      >
+        Close
+      </button>
+      <button type="button" class="btn btn-primary" (click)="createGroup()">
+        Save
+      </button>
+    </div>
+  </div>
+</ng-template>

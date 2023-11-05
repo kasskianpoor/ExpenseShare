@@ -12,6 +12,7 @@ import { NavComponent } from './nav/nav.component';
 import { HttpClientModule } from '@angular/common/http';
 import { LogoutComponent } from './logout/logout.component';
 import { NotfoundComponent } from './notfound/notfound.component';
+import { GroupComponent } from './group/group.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { NotfoundComponent } from './notfound/notfound.component';
     NavComponent,
     LogoutComponent,
     NotfoundComponent,
+    GroupComponent,
   ],
   imports: [
     HttpClientModule,

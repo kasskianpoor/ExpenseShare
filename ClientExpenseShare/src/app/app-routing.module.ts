@@ -7,6 +7,7 @@ import { paths } from './_constants';
 import { LogoutComponent } from './logout/logout.component';
 import { authGuard } from './_guards/auth.guard';
 import { NotfoundComponent } from './notfound/notfound.component';
+import { GroupComponent } from './group/group.component';
 
 const routes: Routes = [
   { path: paths.login, component: LoginComponent, pathMatch: 'full' },
@@ -19,6 +20,11 @@ const routes: Routes = [
       {
         path: paths.dashboard,
         component: DashboardComponent,
+        pathMatch: 'full',
+      },
+      {
+        path: paths.group,
+        component: GroupComponent,
         pathMatch: 'full',
       },
       { path: paths.logout, component: LogoutComponent, pathMatch: 'full' },

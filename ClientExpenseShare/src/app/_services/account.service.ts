@@ -15,6 +15,8 @@ export class AccountService {
   private currentUserSource = new BehaviorSubject<UserTokenData | null>(null);
   currentUser$ = this.currentUserSource.asObservable();
 
+  token: any = null;
+
   login(userCredentials: UserCredentials) {
     return this.http
       .post<UserTokenData>(
@@ -42,6 +44,7 @@ export class AccountService {
 
   setCurrentUser(user: UserTokenData | null) {
     this.currentUserSource.next(user);
+    this.token = user?.token;
   }
 
   getCurrentUser(): Observable<UserTokenData | null> {
