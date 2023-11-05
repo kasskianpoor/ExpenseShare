@@ -5,8 +5,8 @@
   border-color: #1118ce;
 }
 
-.temp-empty-section {
-  min-height: 100px;
+.empty-member {
+  height: 40px;
   border-style: dotted;
   border-color: rgb(114, 112, 112);
   border-radius: 20px;
@@ -19,6 +19,12 @@
   border-radius: 20px;
 }
 
+.groups-container {
+  display: flex;
+  gap: 10px 10px;
+  flex-wrap: wrap;
+}
+
 .empty-section-info {
   display: flex;
   justify-content: center;
@@ -27,7 +33,25 @@
   opacity: 0.8;
 }
 
+.member-pill {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+  color: rgb(187, 189, 189);
+  opacity: 0.8;
+  border-radius: 20px;
+  height: 40px;
+}
+
+.member-pill:hover {
+  background-color: rgb(192, 92, 92);
+  opacity: 0.4;
+  cursor: pointer;
+}
+
 .empty-section-info:hover {
   background-color: rgb(158, 158, 158);
   opacity: 0.4;
+  cursor: pointer;
 }

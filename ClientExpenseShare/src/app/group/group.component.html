@@ -1,10 +1,120 @@
 <div class="page-title">
-  <h1>Group</h1>
-  <div>{{ group.name }}</div>
+  <h1>
+    {{ group.name }}
+  </h1>
 </div>
-<div class="temp-empty-section mt-3 empty-section-info">
-  <p>Click here to add those who you share the expense with!</p>
+<div class="groups-container mt-3 mt-3">
+  <div class="member-pill" *ngFor="let user of group.users">
+    <p class="p-3 m-0 overflow-auto">
+      {{ user.userName }}
+    </p>
+  </div>
+  <div
+    class="empty-member empty-section-info"
+    (click)="openModal(addMemberContent)"
+  >
+    <p class="p-3 m-0">Click to add members!</p>
+  </div>
 </div>
-<div class="temp-empty-section-lg mt-3 empty-section-info">
+<div
+  class="temp-empty-section-lg mt-3 empty-section-info"
+  (click)="openModal(addExpenseContent)"
+>
   <p>Click here to add expenses who you share the expense with!</p>
 </div>
+
+<ng-template #addMemberContent let-modal>
+  <div class="general-modal">
+    <div class="modal-header">
+      <h4 class="modal-title">Add Member</h4>
+      <button
+        type="button"
+        class="btn btn-outline-danger"
+        aria-label="Close"
+        (click)="modal.dismiss('Cross click')"
+      >
+        X
+      </button>
+    </div>
+    <div class="modal-body">
+      <label for="groupName" class="form-label"
+        >Who do you want to add? Enter their email if the user exists we will
+        add them to your group</label
+      >
+      <input
+        type="text"
+        class="form-control bg-light"
+        id="groupName"
+        style="color: black"
+      />
+    </div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-outline-danger"
+        (click)="modal.close('Close click')"
+      >
+        Close
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #addExpenseContent let-modal>
+  <div class="general-modal">
+    <div class="modal-header">
+      <h4 class="modal-title">Add Expense</h4>
+      <button
+        type="button"
+        class="btn btn-outline-danger"
+        aria-label="Close"
+        (click)="modal.dismiss('Cross click')"
+      >
+        X
+      </button>
+    </div>
+    <div class="modal-body">
+      <label for="groupName" class="form-label">Who covered the cost?</label>
+      <div ngbDropdown class="d-lg-flex">
+        <button
+          type="button"
+          class="btn btn-outline-primary w-100"
+          id="dropdownBasic1"
+          ngbDropdownToggle
+        >
+          {{ paidUser?.email }}
+        </button>
+        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+          <button
+            ngbDropdownItem
+            *ngFor="let user of group.users"
+            (click)="setPaidUser(user)"
+          >
+            {{ user.email }}
+          </button>
+        </div>
+      </div>
+      <label for="groupName" class="form-label">How much was spent?</label>
+      <input
+        [(ngModel)]="expenseToBeCreated.amount"
+        (keyup.enter)="createExpense()"
+        type="number"
+        class="form-control bg-light"
+        id="groupName"
+        style="color: black"
+      />
+    </div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-outline-danger"
+        (click)="modal.close('Close click')"
+      >
+        Close
+      </button>
+      <button type="button" class="btn btn-primary" (click)="createExpense()">
+        Add
+      </button>
+    </div>
+  </div>
+</ng-template>

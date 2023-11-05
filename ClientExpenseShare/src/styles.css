@@ -27,6 +27,10 @@ body {
   border-radius: 20px;
 }
 
+.modal-backdrop {
+  background-color: white;
+}
+
 .modal-content {
   border-radius: 25px;
 }
