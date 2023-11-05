@@ -34,13 +34,13 @@ public class GroupMembersController : AuthorizedOnlyControllerBase
     }
 
     [HttpDelete]
-    public async Task<ActionResult<Group>> DeleteGroupMember(GroupMemberInputDto groupMemberInputDto)
+    public async Task<ActionResult<Group>> DeleteGroupMember(GroupMemberRemoveInputDto groupMemberInputDto)
     {
         var group = await this.context.Groups
             .Where(group => group.Id == groupMemberInputDto.GroupId)
             .Include(group => group.Users)
             .FirstOrDefaultAsync();
-        var user = await this.context.Users.Where(xUser => xUser.Email == groupMemberInputDto.UserEmail).FirstOrDefaultAsync();
+        var user = await this.context.Users.FindAsync(groupMemberInputDto.UserId);
 
         if (user != null && group != null)
         {

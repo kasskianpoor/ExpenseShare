@@ -8,3 +8,11 @@ public class GroupMemberInputDto
     [Required]
     public int GroupId { get; set; }
 }
+
+public class GroupMemberRemoveInputDto
+{
+    [Required]
+    public int UserId { get; set; }
+    [Required]
+    public int GroupId { get; set; }
+}
