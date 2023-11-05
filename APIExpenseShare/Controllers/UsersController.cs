@@ -1,5 +1,7 @@
 ﻿using APIExpenseShare.Data;
 using APIExpenseShare.DTOs;
+using APIExpenseShare.Entities;
+using APIExpenseShare.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -16,14 +18,14 @@ public class UsersController : AuthorizedOnlyControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<UsersDto>> GetUsers()
+    public async Task<ActionResult<IPaginatedDto<User>>> GetUsers()
     {
         var users = await _context.Users.ToListAsync();
-        return new UsersDto
+        return new PaginatedDto<User>
         {
             PageNumber = 1,
             TotalNumOfPages = 10,
-            Users = users
+            Data = users
         };
     }
 

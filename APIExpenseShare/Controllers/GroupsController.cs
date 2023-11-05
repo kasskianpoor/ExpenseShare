@@ -1,6 +1,7 @@
 using APIExpenseShare.Data;
 using APIExpenseShare.DTOs;
 using APIExpenseShare.Entities;
+using APIExpenseShare.Interfaces;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
@@ -17,7 +18,7 @@ public class GroupsController : AuthorizedOnlyControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<GroupsDto>> GetGroups()
+    public async Task<ActionResult<IPaginatedDto<Group>>> GetGroups()
     {
         var token = await HttpContext.AuthenticateAsync();
         if (token == null) return Unauthorized();
@@ -30,11 +31,11 @@ public class GroupsController : AuthorizedOnlyControllerBase
             })
             .ToListAsync();
 
-        return new GroupsDto
+        return new PaginatedDto<Group>
         {
             PageNumber = 0,
             TotalNumOfPages = 0,
-            Groups = usersGroup[0].Groups
+            Data = usersGroup[0].Groups
         };
     }
 

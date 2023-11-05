@@ -1,13 +1,4 @@
-using APIExpenseShare.Entities;
-using APIExpenseShare.Interfaces;
-
 namespace APIExpenseShare.DTOs;
-public class ExpensesDto : IPaginatedDto
-{
-    public int PageNumber { get; set; }
-    public int TotalNumOfPages { get; set; }
-    public List<Expense>? Expenses { get; set; }
-}
 
 public class CreateExpenseDto
 {

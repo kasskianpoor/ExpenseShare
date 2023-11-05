@@ -1,6 +1,7 @@
 using APIExpenseShare.Data;
 using APIExpenseShare.DTOs;
 using APIExpenseShare.Entities;
+using APIExpenseShare.Interfaces;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -49,15 +50,15 @@ public class ExpensesController : AuthorizedOnlyControllerBase
         return expense;
     }
     [HttpGet("{group_id}")]
-    public async Task<ActionResult<ExpensesDto>> GetExpenses(int group_id)
+    public async Task<ActionResult<IPaginatedDto<Expense>>> GetExpenses(int group_id)
     {
         var expenses = await context.Expenses.Where(x => x.GroupId == group_id).ToListAsync();
 
-        return new ExpensesDto
+        return new PaginatedDto<Expense>
         {
             PageNumber = 0,
             TotalNumOfPages = 0,
-            Expenses = expenses,
+            Data = expenses,
         };
     }
     [HttpPut]
