@@ -1,6 +1,10 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace APIExpenseShare.DTOs;
 public class GroupMemberInputDto
 {
-    public int UserId { get; set; }
+    [Required]
+    public required string UserEmail { get; set; }
+    [Required]
     public int GroupId { get; set; }
 }

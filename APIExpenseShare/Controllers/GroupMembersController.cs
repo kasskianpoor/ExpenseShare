@@ -21,7 +21,7 @@ public class GroupMembersController : AuthorizedOnlyControllerBase
             .Where(group => group.Id == groupMemberInputDto.GroupId)
             .Include(group => group.Users)
             .FirstOrDefaultAsync();
-        var user = await this.context.Users.FindAsync(groupMemberInputDto.UserId);
+        var user = await this.context.Users.Where(xUser => xUser.Email == groupMemberInputDto.UserEmail).FirstOrDefaultAsync();
 
         if (user != null && group != null)
         {
@@ -40,7 +40,7 @@ public class GroupMembersController : AuthorizedOnlyControllerBase
             .Where(group => group.Id == groupMemberInputDto.GroupId)
             .Include(group => group.Users)
             .FirstOrDefaultAsync();
-        var user = await this.context.Users.FindAsync(groupMemberInputDto.UserId);
+        var user = await this.context.Users.Where(xUser => xUser.Email == groupMemberInputDto.UserEmail).FirstOrDefaultAsync();
 
         if (user != null && group != null)
         {
