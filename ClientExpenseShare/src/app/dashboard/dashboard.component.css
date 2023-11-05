@@ -6,17 +6,25 @@
 }
 
 .temp-empty-section {
-  min-height: 100px;
+  height: 50px;
   border-style: dotted;
   border-color: rgb(114, 112, 112);
   border-radius: 20px;
+  width: 200px;
 }
 
-.temp-empty-section-lg {
-  min-height: 200px;
-  border-style: dotted;
+.card-info-section {
+  height: 50px;
+  border-style: solid;
   border-color: rgb(114, 112, 112);
   border-radius: 20px;
+  width: 200px;
+}
+
+.groups-container {
+  display: flex;
+  gap: 10px 10px;
+  flex-wrap: wrap;
 }
 
 .empty-section-info {
@@ -25,7 +33,6 @@
   align-items: center;
   color: rgb(187, 189, 189);
   opacity: 0.8;
-  min-height: 200px;
 }
 
 .empty-section-info:hover {

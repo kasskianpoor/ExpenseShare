@@ -1,14 +1,24 @@
 <div class="page-title">
   <h1>Dashboard</h1>
 </div>
-<div>
-  <p *ngFor="let group of groups; index as i; first as isFirst">group</p>
-</div>
-<div
-  class="temp-empty-section mt-3 empty-section-info w-25"
-  (click)="openModal(content)"
->
-  <p class="p-2 m-0 overflow-auto">Click here to add your group!</p>
+<div class="groups-container">
+  <div
+    class="card-info-section mt-3 empty-section-info"
+    (click)="openModal(content)"
+    *ngFor="let group of groups; index as i; first as isFirst"
+  >
+    <p class="p-2 m-0 overflow-auto">
+      {{ group.name }}
+    </p>
+  </div>
+  <div
+    class="temp-empty-section mt-3 empty-section-info"
+    (click)="openModal(content)"
+  >
+    <p class="p-2 m-0 overflow-auto">
+      {{ groups.length ? "+" : "Click here to add your group!" }}
+    </p>
+  </div>
 </div>
 
 <ng-template class="general-modal" #content let-modal>

@@ -25,7 +25,7 @@ export class GroupsService {
   }
 
   getGroups() {
-    return this.http.get<IPaginatedData<groupEntity>>(
+    return this.http.get<IPaginatedData<groupEntity[]>>(
       `${mainBackendUrl}/api/groups`,
       {
         headers: {

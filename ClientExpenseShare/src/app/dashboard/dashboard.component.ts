@@ -26,7 +26,7 @@ export class DashboardComponent implements OnInit {
   newGroup = {
     groupName: '',
   };
-  groups = [];
+  groups: groupEntity[] = [];
 
   constructor(
     private modalService: NgbModal,
@@ -36,11 +36,8 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.groupService.getGroups().subscribe({
-      next: (resp: IPaginatedData<groupEntity>) => {
-        console.log('====================================');
-        console.log('Groups:', resp);
-        console.log('=================s===================');
-        // this.groups = resp.groups;
+      next: (resp: IPaginatedData<groupEntity[]>) => {
+        this.groups = resp.data;
       },
       error: (error) => {
         console.log('====================================');
@@ -59,7 +56,7 @@ export class DashboardComponent implements OnInit {
     this.groupService.createGroup(this.newGroup).subscribe({
       next: (resp: CreateGroupResp) => {
         this.router.navigate([paths.group], {
-          queryParams: { group_id: resp.id },
+          queryParams: { group_id: resp.id, group_name: resp.name },
         });
         this.modalService.dismissAll();
       },
