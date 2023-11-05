@@ -7,7 +7,7 @@ export type expenseEntity = {
 };
 
 export type expenseEntityToBeCreated = {
-  amount: number;
+  amount?: number;
   groupId: number;
   paidByUserId: number;
 };

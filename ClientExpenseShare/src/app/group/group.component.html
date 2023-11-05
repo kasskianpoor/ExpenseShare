@@ -5,9 +5,11 @@
 </div>
 <div class="groups-container mt-3 mt-3">
   <div class="member-pill" *ngFor="let user of group.users">
-    <p class="p-3 m-0 overflow-auto">
-      {{ user.userName }}
-    </p>
+    <div (click)="removeGroupMember(user.id)">
+      <p class="p-3 m-0 overflow-auto">
+        {{ user.userName }}
+      </p>
+    </div>
   </div>
   <div
     class="empty-member empty-section-info"
@@ -42,6 +44,8 @@
         add them to your group</label
       >
       <input
+        [(ngModel)]="groupMemberToBeAdded.userEmail"
+        (keyup.enter)="addGroupMember()"
         type="text"
         class="form-control bg-light"
         id="groupName"
@@ -55,6 +59,9 @@
         (click)="modal.close('Close click')"
       >
         Close
+      </button>
+      <button type="button" class="btn btn-primary" (click)="addGroupMember()">
+        Add
       </button>
     </div>
   </div>

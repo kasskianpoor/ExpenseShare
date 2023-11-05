@@ -6,11 +6,11 @@ import { paths } from '../_constants';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { userEntity } from '../_types/Entities/user-entity';
 import { expenseEntityToBeCreated } from '../_types/Entities/expense-entity';
+import { GroupMembersService } from '../_services/group-members.service';
 
-type queryParamType = {
-  group_id: number;
+type userEmailInput = {
+  userEmail: string;
 };
-
 @Component({
   selector: 'app-group',
   templateUrl: './group.component.html',
@@ -25,16 +25,21 @@ export class GroupComponent implements OnInit {
 
   paidUser: userEntity | undefined;
   expenseToBeCreated: expenseEntityToBeCreated = {
-    amount: 0,
+    amount: undefined,
     groupId: 0,
     paidByUserId: 0,
+  };
+
+  groupMemberToBeAdded: userEmailInput = {
+    userEmail: '',
   };
 
   constructor(
     private route: ActivatedRoute,
     private groupService: GroupsService,
     private router: Router,
-    private _modalService: NgbModal
+    private _modalService: NgbModal,
+    private groupMemberService: GroupMembersService
   ) {}
 
   ngOnInit(): void {
@@ -68,6 +73,10 @@ export class GroupComponent implements OnInit {
     this.paidUser = user;
   }
 
+  getGroupId() {
+    return this.group.id;
+  }
+
   createExpense() {
     if (!this.paidUser) return;
     this.expenseToBeCreated.paidByUserId = this.paidUser.id;
@@ -77,5 +86,39 @@ export class GroupComponent implements OnInit {
     this.paidUser = undefined;
     this.expenseToBeCreated.amount = 0;
     this._modalService.dismissAll();
+  }
+
+  addGroupMember() {
+    this.groupMemberService
+      .createGroupMember({
+        userEmail: this.groupMemberToBeAdded.userEmail,
+        groupId: this.group.id,
+      })
+      .subscribe({
+        next: (resp) => {
+          this.group.users = resp.users;
+          this.groupMemberToBeAdded.userEmail = '';
+          this._modalService.dismissAll();
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
+  }
+
+  removeGroupMember(user_id: number) {
+    this.groupMemberService
+      .deleteGroupMember({
+        userId: user_id,
+        groupId: this.group.id,
+      })
+      .subscribe({
+        next: (value) => {
+          this.group.users = value.users;
+        },
+        error(err) {
+          console.log(err);
+        },
+      });
   }
 }
