@@ -4,8 +4,9 @@
 <div class="groups-container">
   <div
     class="card-info-section mt-3 empty-section-info"
-    (click)="openModal(content)"
+    routerLink="/group"
     *ngFor="let group of groups; index as i; first as isFirst"
+    [queryParams]="{ group_id: group.id }"
   >
     <p class="p-2 m-0 overflow-auto">
       {{ group.name }}

@@ -34,4 +34,15 @@ export class GroupsService {
       }
     );
   }
+
+  getGroup(group_id: number) {
+    return this.http.get<groupEntity>(
+      `${mainBackendUrl}/api/groups/${group_id}/members`,
+      {
+        headers: {
+          Authorization: `Bearer ${this.accountService.token}`,
+        },
+      }
+    );
+  }
 }
