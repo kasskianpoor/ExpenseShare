@@ -28,7 +28,6 @@ export class GroupMembersService {
   }
 
   deleteGroupMember(input: GroupMemberDeleteInput) {
-    console.log(input);
     return this.http.delete<groupEntity>(`${mainBackendUrl}/api/groupmembers`, {
       headers: {
         Authorization: `Bearer ${this.accountService.token}`,

@@ -19,6 +19,7 @@
   border-color: rgb(114, 112, 112);
   border-radius: 20px;
   width: 200px;
+  cursor: pointer;
 }
 
 .groups-container {

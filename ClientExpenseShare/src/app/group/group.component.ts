@@ -1,22 +1,38 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+  TemplateRef,
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { groupEntity } from '../_types/Entities/group-entity';
 import { GroupsService } from '../_services/groups.service';
 import { paths } from '../_constants';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { userEntity } from '../_types/Entities/user-entity';
-import { expenseEntityToBeCreated } from '../_types/Entities/expense-entity';
+import {
+  expenseEntity,
+  expenseEntityToBeCreated,
+} from '../_types/Entities/expense-entity';
 import { GroupMembersService } from '../_services/group-members.service';
+import { ExpensesService } from '../_services/expenses.service';
 
 type userEmailInput = {
   userEmail: string;
 };
+
+// type expenseEditInput = {
+
+// }
 @Component({
   selector: 'app-group',
   templateUrl: './group.component.html',
   styleUrls: ['./group.component.css'],
 })
 export class GroupComponent implements OnInit {
+  expenses: expenseEntity[] = [];
   group: groupEntity = {
     id: 0,
     name: '',
@@ -27,19 +43,30 @@ export class GroupComponent implements OnInit {
   expenseToBeCreated: expenseEntityToBeCreated = {
     amount: undefined,
     groupId: 0,
-    paidByUserId: 0,
+    userId: 0,
   };
+
+  expenseToBeEdited: expenseEntity | undefined;
 
   groupMemberToBeAdded: userEmailInput = {
     userEmail: '',
   };
+
+  total: number = 0;
+  updateTotal() {
+    this.total = 0;
+    for (const expense of this.expenses) {
+      this.total += expense.amount;
+    }
+  }
 
   constructor(
     private route: ActivatedRoute,
     private groupService: GroupsService,
     private router: Router,
     private _modalService: NgbModal,
-    private groupMemberService: GroupMembersService
+    private groupMemberService: GroupMembersService,
+    private expenseService: ExpensesService
   ) {}
 
   ngOnInit(): void {
@@ -60,6 +87,17 @@ export class GroupComponent implements OnInit {
             console.log(err);
           },
         });
+
+        this.expenseService.getExpenses({ id: this.group.id }).subscribe({
+          next: (resp) => {
+            this.expenses = resp.data;
+            this.updateTotal();
+          },
+          error: (err) => {
+            this.router.navigate([paths['404']]);
+            console.log(err);
+          },
+        });
       },
       error: (err) => console.log(err),
     });
@@ -69,20 +107,67 @@ export class GroupComponent implements OnInit {
     this._modalService.open(content);
   }
 
+  openExpenseEditModal(
+    content: TemplateRef<any>,
+    expenseToEdit: expenseEntity
+  ) {
+    this.expenseToBeEdited = { ...expenseToEdit };
+    this._modalService.open(content);
+  }
+
+  editExpense() {
+    if (!this.expenseToBeEdited) return;
+    this.expenseService.editExpense(this.expenseToBeEdited).subscribe({
+      next: (resp) => {
+        for (const expense of this.expenses) {
+          if (expense.id === resp.id) expense.amount = resp.amount;
+        }
+        this.updateTotal();
+        this._modalService.dismissAll();
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
+
   setPaidUser(user: userEntity) {
     this.paidUser = user;
   }
 
-  getGroupId() {
-    return this.group.id;
-  }
-
   createExpense() {
     if (!this.paidUser) return;
-    this.expenseToBeCreated.paidByUserId = this.paidUser.id;
-    console.log('====================================');
+    this.expenseToBeCreated.userId = this.paidUser.id;
     console.log(this.expenseToBeCreated);
-    console.log('====================================');
+
+    this.expenseService.createExpense(this.expenseToBeCreated).subscribe({
+      next: (resp) => {
+        this.expenses.push(resp);
+        this.updateTotal();
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+    this.paidUser = undefined;
+    this.expenseToBeCreated.amount = 0;
+    this._modalService.dismissAll();
+  }
+
+  deleteExpense(expense_id: number) {
+    this.expenseService.deleteExpense({ id: expense_id }).subscribe({
+      next: (resp) => {
+        this.expenses = this.expenses.filter((expense) => {
+          console.log(expense, 'expense');
+          console.log(resp, 'resp');
+          return expense.id !== resp.id;
+        });
+        this.updateTotal();
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
     this.paidUser = undefined;
     this.expenseToBeCreated.amount = 0;
     this._modalService.dismissAll();

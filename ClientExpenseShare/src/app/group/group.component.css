@@ -13,10 +13,30 @@
 }
 
 .temp-empty-section-lg {
-  min-height: 200px;
+  min-height: 150px;
   border-style: dotted;
   border-color: rgb(114, 112, 112);
   border-radius: 20px;
+}
+
+.expense-box-section-lg {
+  min-height: 150px;
+  background-color: rgb(0, 0, 0);
+  border-radius: 20px;
+}
+
+.field-label {
+  color: #1118ce;
+}
+
+.expense-content {
+  display: flex;
+  justify-content: space-between;
+}
+
+.calc-section {
+  display: flex;
+  justify-content: space-between;
 }
 
 .groups-container {

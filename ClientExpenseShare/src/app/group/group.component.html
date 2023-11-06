@@ -18,11 +18,48 @@
     <p class="p-3 m-0">Click to add members!</p>
   </div>
 </div>
+<div class="expense-box-section-lg mt-3" *ngFor="let expense of expenses">
+  <div class="p-3 expense-content">
+    <div>
+      <p><span class="field-label">Id:</span> {{ expense.id }}</p>
+      <p><span class="field-label">Amount:</span> {{ expense.amount }}</p>
+      <p>
+        <span class="field-label">Paid by:</span>
+        {{ expense.paidByUser?.userName || expense.paidByUser?.email }}
+      </p>
+    </div>
+    <div>
+      <button
+        class="btn btn-outline-primary m-1"
+        (click)="openExpenseEditModal(editAmountContent, expense)"
+      >
+        edit
+      </button>
+      <button
+        class="btn btn-outline-danger m-1"
+        (click)="deleteExpense(expense.id)"
+      >
+        delete
+      </button>
+    </div>
+  </div>
+</div>
 <div
   class="temp-empty-section-lg mt-3 empty-section-info"
   (click)="openModal(addExpenseContent)"
 >
-  <p>Click here to add expenses who you share the expense with!</p>
+  <p class="m-0">Click here to add expenses!</p>
+</div>
+
+<div
+  *ngIf="expenses.length"
+  class="border-3 border-white border-primary p-2 m-2"
+  style="border-top: 5px solid white"
+>
+  <div class="calc-section">
+    <div>Total: {{ total }}</div>
+    <button class="btn btn-primary">Split</button>
+  </div>
 </div>
 
 <ng-template #addMemberContent let-modal>
@@ -121,6 +158,53 @@
       </button>
       <button type="button" class="btn btn-primary" (click)="createExpense()">
         Add
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #editAmountContent let-modal>
+  <div class="general-modal">
+    <div class="modal-header">
+      <h4 class="modal-title">Edit Expense</h4>
+      <button
+        type="button"
+        class="btn btn-outline-danger"
+        aria-label="Close"
+        (click)="modal.dismiss('Cross click')"
+      >
+        X
+      </button>
+    </div>
+    <div class="modal-body">
+      <p><span class="field-label">Id:</span> {{ expenseToBeEdited?.id }}</p>
+      <p>
+        <span class="field-label">Paid by:</span>
+        {{
+          expenseToBeEdited?.paidByUser?.userName ||
+            expenseToBeEdited?.paidByUser?.email
+        }}
+      </p>
+      <label for="amount" class="form-label">Amount</label>
+      <input
+        [(ngModel)]="expenseToBeEdited!.amount"
+        (keyup.enter)="editExpense()"
+        type="text"
+        class="form-control bg-light"
+        id="amount"
+        style="color: black"
+      />
+    </div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-outline-danger"
+        (click)="modal.close('Close click')"
+      >
+        Close
+      </button>
+      <button type="button" class="btn btn-primary" (click)="editExpense()">
+        Edit
       </button>
     </div>
   </div>
