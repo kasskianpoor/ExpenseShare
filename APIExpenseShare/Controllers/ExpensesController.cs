@@ -52,7 +52,7 @@ public class ExpensesController : AuthorizedOnlyControllerBase
     [HttpGet("{group_id}")]
     public async Task<ActionResult<IPaginatedDto<Expense>>> GetExpenses(int group_id)
     {
-        var expenses = await context.Expenses.Where(x => x.GroupId == group_id).ToListAsync();
+        var expenses = await context.Expenses.Where(x => x.GroupId == group_id).Include(expense => expense.PaidByUser).ToListAsync();
 
         return new PaginatedDto<Expense>
         {
