@@ -10,10 +10,12 @@ namespace APIExpenseShare.Controllers;
 public class ExpensesController : AuthorizedOnlyControllerBase
 {
     private readonly DataContext context;
+    private readonly ITokenService tokenService;
 
-    public ExpensesController(DataContext context)
+    public ExpensesController(DataContext context, ITokenService tokenService)
     {
         this.context = context;
+        this.tokenService = tokenService;
     }
 
     [HttpPost]
@@ -21,10 +23,10 @@ public class ExpensesController : AuthorizedOnlyControllerBase
     {
         var token = await HttpContext.AuthenticateAsync();
         if (token == null) return Unauthorized();
-        int? user_id = Convert.ToInt32(token.Principal!.Claims.FirstOrDefault(x => x.Type == "user_id")!.Value);
+        var user_id = tokenService.GetUserIdOfToken(token);
         if (createExpenseDto.UserId != null)
         {
-            user_id = createExpenseDto.UserId;
+            user_id = (int)createExpenseDto.UserId;
         }
 
         var user = await context.Users.SingleAsync(xUser => xUser.Id == user_id);

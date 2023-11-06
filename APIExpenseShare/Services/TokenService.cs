@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Text;
 using APIExpenseShare.Entities;
 using APIExpenseShare.Interfaces;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.IdentityModel.Tokens;
 
 namespace APIExpenseShare.Services;
@@ -35,4 +36,10 @@ public class TokenService : ITokenService
         var token = tokenHandler.CreateToken(tokenDescriptor);
         return tokenHandler.WriteToken(token);
     }
+
+    public int GetUserIdOfToken(AuthenticateResult resultToken)
+    {
+        return Convert.ToInt32(resultToken.Principal!.Claims.FirstOrDefault(x => x.Type == "user_id")!.Value);
+    }
+
 }

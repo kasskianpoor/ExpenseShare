@@ -11,10 +11,12 @@ namespace APIExpenseShare.Controllers;
 public class GroupsController : AuthorizedOnlyControllerBase
 {
     private readonly DataContext context;
+    private readonly ITokenService tokenService;
 
-    public GroupsController(DataContext context)
+    public GroupsController(DataContext context, ITokenService tokenService)
     {
         this.context = context;
+        this.tokenService = tokenService;
     }
 
     [HttpGet]
@@ -22,7 +24,7 @@ public class GroupsController : AuthorizedOnlyControllerBase
     {
         var token = await HttpContext.AuthenticateAsync();
         if (token == null) return Unauthorized();
-        var user_id = Convert.ToInt32(token.Principal!.Claims.FirstOrDefault(x => x.Type == "user_id")!.Value);
+        var user_id = tokenService.GetUserIdOfToken(token);
         var usersGroup = await this.context.Users
             .Where(xUser => xUser.Id == user_id)
             .Select(xUser => new
@@ -44,7 +46,7 @@ public class GroupsController : AuthorizedOnlyControllerBase
     {
         var token = await HttpContext.AuthenticateAsync();
         if (token == null) return Unauthorized();
-        var user_id = Convert.ToInt32(token.Principal!.Claims.FirstOrDefault(x => x.Type == "user_id")!.Value);
+        var user_id = tokenService.GetUserIdOfToken(token);
         if (createGroupInputDto == null) return BadRequest();
 
         var user = await this.context.Users.SingleAsync(xUser => xUser.Id == user_id);
@@ -78,7 +80,7 @@ public class GroupsController : AuthorizedOnlyControllerBase
     {
         var token = await HttpContext.AuthenticateAsync();
         if (token == null) return Unauthorized();
-        var user_id = Convert.ToInt32(token.Principal!.Claims.FirstOrDefault(x => x.Type == "user_id")!.Value);
+        var user_id = tokenService.GetUserIdOfToken(token);
         var group = await this.context.Groups
             .Where(group => group.Id == id)
             .Include(group => group.Users)
