@@ -5,23 +5,33 @@ import logging
 
 app = func.FunctionApp()
 
-@app.route(route="split_function", auth_level=func.AuthLevel.ANONYMOUS)
+
+@app.route(route="split_function", auth_level=func.AuthLevel.ANONYMOUS, methods=["POST"])
 def split_function(req: func.HttpRequest) -> func.HttpResponse:
-    logging.info('Python HTTP trigger function processed a request.')
+    logging.info('HEREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE')
 
-    name = req.params.get('name')
-    if not name:
-        try:
-            req_body = req.get_json()
-        except ValueError:
-            pass
-        else:
-            name = req_body.get('name')
+    data = req.get_json()
 
-    if name:
-        return func.HttpResponse(f"Hello, {name}. This HTTP triggered function executed successfully.")
-    else:
-        return func.HttpResponse(
-             "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response.",
-             status_code=200
-        )
+    expenses = data['expenses']
+    logging.info(expenses)
+
+    sumExp = 0
+
+    # Iterate through the expenses and calculate the sum
+    for expense in expenses:
+        sumExp += expense['Amount']
+
+    logging.info(sumExp)
+
+    json_array = [
+        {"key1": "value1", "key2": "value2"},
+        {"key1": "value3", "key2": "value4"}
+    ]
+
+    response_json = json.dumps(json_array)
+
+    return func.HttpResponse(
+        response_json,
+        mimetype="application/json",
+        status_code=200
+    )
