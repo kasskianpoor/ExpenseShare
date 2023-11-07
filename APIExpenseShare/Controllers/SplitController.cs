@@ -32,7 +32,7 @@ public class SplitController : AuthorizedOnlyControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<List<Expense>>> CalculateSplit(CalculateSplitDto calculateSplitDto)
+    public async Task<ActionResult<string>> CalculateSplit(CalculateSplitDto calculateSplitDto)
     {
         var expenses = await context.Expenses.Where(x => x.GroupId == calculateSplitDto.GroupId).Include(expense => expense.PaidByUser).ToListAsync();
         var group = await context.Groups.Where(x => x.Id == calculateSplitDto.GroupId).Include(group => group.Users).ToListAsync();
@@ -47,7 +47,6 @@ public class SplitController : AuthorizedOnlyControllerBase
                 "application/json");
 
         var resp = await sharedClient.PostAsync("api/split_function", jsonContent);
-        return expenses;
+        return await resp.Content.ReadAsStringAsync();
     }
-
 }
