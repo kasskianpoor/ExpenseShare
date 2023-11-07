@@ -58,8 +58,11 @@
 >
   <div class="calc-section">
     <div>Total: {{ total }}</div>
-    <button class="btn btn-primary">Split</button>
+    <button class="btn btn-primary" (click)="split()">Split</button>
   </div>
+</div>
+<div class="p-2" *ngFor="let text of splitResultTexts">
+  <p>{{ text }}</p>
 </div>
 
 <ng-template #addMemberContent let-modal>

@@ -18,6 +18,8 @@ import {
 } from '../_types/Entities/expense-entity';
 import { GroupMembersService } from '../_services/group-members.service';
 import { ExpensesService } from '../_services/expenses.service';
+import { SplitService } from '../_services/split.service';
+import { SplitResponseJSON } from '../_types/SplitResponse';
 
 type userEmailInput = {
   userEmail: string;
@@ -33,6 +35,7 @@ type userEmailInput = {
 })
 export class GroupComponent implements OnInit {
   expenses: expenseEntity[] = [];
+  splitResultTexts: string[] = [];
   group: groupEntity = {
     id: 0,
     name: '',
@@ -66,7 +69,8 @@ export class GroupComponent implements OnInit {
     private router: Router,
     private _modalService: NgbModal,
     private groupMemberService: GroupMembersService,
-    private expenseService: ExpensesService
+    private expenseService: ExpensesService,
+    private splitService: SplitService
   ) {}
 
   ngOnInit(): void {
@@ -205,5 +209,46 @@ export class GroupComponent implements OnInit {
           console.log(err);
         },
       });
+  }
+
+  split() {
+    console.log(this.group.id);
+    this.splitService.split({ groupId: this.group.id }).subscribe({
+      next: (resp) => {
+        if (!this.group.users) return;
+        if (resp) {
+          console.log("I'm here", resp);
+          console.log('Houbout here');
+
+          for (const res of resp) {
+            const currUser = this.group.users.find(
+              (user) => user.id == res.userId
+            );
+            if (res.shouldPay > 0) {
+              this.splitResultTexts.push(
+                `${currUser?.userName || currUser?.email} should pay $${
+                  res.shouldPay
+                }`
+              );
+            } else if (res.shouldPay == 0) {
+              this.splitResultTexts.push(
+                `${currUser?.userName || currUser?.email} shouldn't do anything`
+              );
+            } else {
+              this.splitResultTexts.push(
+                `${
+                  currUser?.userName || currUser?.email
+                } shouldn receive $${Math.abs(res.shouldPay)}`
+              );
+            }
+          }
+        } else {
+          console.log('something went terribly wrong');
+        }
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
   }
 }

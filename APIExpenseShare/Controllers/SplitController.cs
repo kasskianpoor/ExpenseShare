@@ -9,8 +9,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace APIExpenseShare.Controllers;
 
-
-
 public class CalculateSplitDto
 {
     [Required]
