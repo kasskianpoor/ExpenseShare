@@ -215,6 +215,7 @@ export class GroupComponent implements OnInit {
     console.log(this.group.id);
     this.splitService.split({ groupId: this.group.id }).subscribe({
       next: (resp) => {
+        this.splitResultTexts = [];
         if (!this.group.users) return;
         if (resp) {
           for (const res of resp) {
