@@ -217,9 +217,6 @@ export class GroupComponent implements OnInit {
       next: (resp) => {
         if (!this.group.users) return;
         if (resp) {
-          console.log("I'm here", resp);
-          console.log('Houbout here');
-
           for (const res of resp) {
             const currUser = this.group.users.find(
               (user) => user.id == res.userId
