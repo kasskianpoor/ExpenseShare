@@ -1,39 +1,53 @@
 # ExpenseShare
 
-Description:
-This application simplifies the intricate task of monitoring collective expenditures among you and your companions. When one individual covers an expense, the app facilitates comprehensive record-keeping and adeptly computes each participant's financial obligation.
+**Description:**
+ExpenseShare simplifies the intricate task of monitoring collective expenditures among you and your companions. When one individual covers an expense, the app facilitates comprehensive record-keeping and adeptly computes each participant's financial obligation.
 
-How to run it?
+**How to Run the Application:**
 
-You can download the zip file.
-Then extract the zip file somewhere.
-Using terminal or commandline cd to the the folder where you extracted the zip file.
-If the name of the folder that was extracted from the zip file is ExpenseShare-main change it to ExpenseShare.
+1. **Download and Extract:**
+    - Download the zip file.
+    - Extract the zip file to a directory of your choice.
+2. **Change Directory:**
 
-Then run this command:
-cd ExpenseShare
+    - Using a terminal or command line, navigate to the folder where you extracted the zip file.
+    - If the name of the folder extracted from the zip file is `ExpenseShare-main`, rename it to `ExpenseShare`.
 
-Now from here you might need three terminals. Because you want to run three projects: the back-end project, the front-end project and the azure function.
+3. **Run the Backend Project:**
 
-In the first terminal to run the back-end project run:
-cd APIExpenseShare && dotnet run
+    - In the first terminal, run the backend project:
+        ```shell
+        cd APIExpenseShare
+        dotnet run
+        ```
 
-In the second terminal to run the front-end project run:
-cd ClientExpenseShare
+4. **Run the Frontend Project:**
 
-Then run below command:
-npm install
+    - In the second terminal, run the frontend project:
+        ```shell
+        cd ClientExpenseShare
+        npm install
+        ```
 
-Then to run make sure you have angular cli installed in your system run the command below.
-ng version
+5. **Check Angular CLI:**
 
-If you weren't successful to run previous comman make sure you install Angular CLI: https://angular.io/cli
+    - Ensure you have Angular CLI installed in your system by running the following command:
 
-If you have Angular version ^16._._ chances are you are not going to run into problem.
-Try running the command:
-ng serve
+        ```shell
+        ng version
+        ```
 
-In the last terminal to run the azure function run:
-cd split_function
+    - If Angular CLI is not installed, you can install it from [here](https://angular.io/cli).
 
-To make sure
+    - If you have Angular version ^16._._, you are not likely to encounter problems. Try running the following command:
+        ```shell
+        ng serve
+        ```
+
+6. **Run the Azure Function:**
+    - In the last terminal, run the Azure function:
+        ```shell
+        cd split_function
+        ```
+
+These instructions will help you set up and run the ExpenseShare application with ease. Enjoy managing collective expenditures effortlessly!
