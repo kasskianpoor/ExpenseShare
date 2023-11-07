@@ -35,11 +35,13 @@ public class SplitController : AuthorizedOnlyControllerBase
     public async Task<ActionResult<List<Expense>>> CalculateSplit(CalculateSplitDto calculateSplitDto)
     {
         var expenses = await context.Expenses.Where(x => x.GroupId == calculateSplitDto.GroupId).Include(expense => expense.PaidByUser).ToListAsync();
+        var group = await context.Groups.Where(x => x.Id == calculateSplitDto.GroupId).Include(group => group.Users).ToListAsync();
 
         using StringContent jsonContent = new(
                 JsonSerializer.Serialize(new
                 {
-                    expenses = expenses
+                    expenses = expenses,
+                    numberOfMembers = group[0].Users.Count
                 }),
                 Encoding.UTF8,
                 "application/json");
