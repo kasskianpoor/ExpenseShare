@@ -32,10 +32,13 @@ ExpenseShare simplifies the intricate task of monitoring collective expenditures
 4. **Run the Frontend Project:**
 
     - In the second terminal, run the frontend project:
+
         ```shell
         cd ClientExpenseShare
         npm install
         ```
+
+    - If npm install didn't work, make sure you have node installed on your system [here](https://nodejs.org/en).
 
 5. **Check Angular CLI:**
 
