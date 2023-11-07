@@ -70,6 +70,12 @@ ExpenseShare simplifies the intricate task of monitoring collective expenditures
 
     - After you made sure you have the Azure Function Core Tools, run the following command:
         ```shell
+        func init
+        ```
+    - a proped comes up asking you for the worker runtime. The worker runtime is going to be python. Select python.
+
+    - After that, run the command below:
+        ```shell
         func start
         ```
 
