@@ -30,7 +30,6 @@ def split_function(req: func.HttpRequest) -> func.HttpResponse:
     respArr = []
 
     for user_id, total in userToTotalDict.items():
-        logging.info(total)
         user = {}
         user['userId'] = user_id
         user['shouldPay'] = eachPersonShouldPay - total
