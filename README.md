@@ -11,13 +11,21 @@ ExpenseShare simplifies the intricate task of monitoring collective expenditures
 2. **Change Directory:**
 
     - Using a terminal or command line, navigate to the folder where you extracted the zip file.
-    - If the name of the folder extracted from the zip file is `ExpenseShare-main`, rename it to `ExpenseShare`.
+    - If the name of the folder extracted from the zip file is `ExpenseShare-main`, rename it to `ExpenseShare` and then `cd ExpenseShare`.
 
 3. **Run the Backend Project:**
 
     - In the first terminal, run the backend project:
         ```shell
         cd APIExpenseShare
+        ```
+    - Ensure you have .NET SDK installed in your system by running the following command:
+        ```shell
+        dotnet --info
+        ```
+    - If you do not have .NET SDK install .NET SDK from [here](https://learn.microsoft.com/en-us/dotnet/core/sdk)
+    - After you are sure you have .NET SDK installed run this command:
+        ```shell
         dotnet run
         ```
 
@@ -37,7 +45,7 @@ ExpenseShare simplifies the intricate task of monitoring collective expenditures
         ng version
         ```
 
-    - If Angular CLI is not installed, you can install it from [here](https://angular.io/cli).
+    - If Angular CLI is not installed, you can install it from [here](https://angular.io/cli). After installing Angular CLI repeat from step 5.
 
     - If you have Angular version ^16._._, you are not likely to encounter problems. Try running the following command:
         ```shell
@@ -48,6 +56,11 @@ ExpenseShare simplifies the intricate task of monitoring collective expenditures
     - In the last terminal, run the Azure function:
         ```shell
         cd split_function
+        ```
+7. **Check Azure Function Core Tools:**
+    - Ensure you have Angular CLI installed in your system by running the following command:
+        ```shell
+        func --version
         ```
 
 These instructions will help you set up and run the ExpenseShare application with ease. Enjoy managing collective expenditures effortlessly!
