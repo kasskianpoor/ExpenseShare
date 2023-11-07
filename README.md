@@ -58,9 +58,16 @@ ExpenseShare simplifies the intricate task of monitoring collective expenditures
         cd split_function
         ```
 7. **Check Azure Function Core Tools:**
-    - Ensure you have Angular CLI installed in your system by running the following command:
+
+    - Ensure you have Azure Function Core Tools installed in your system by running the following command:
         ```shell
         func --version
+        ```
+    - If you do not have the Azure Function Core Tools installed first install it. More information can be found [here](https://learn.microsoft.com/en-us/azure/azure-functions/functions-run-local?tabs=linux%2Cisolated-process%2Cnode-v4%2Cpython-v2%2Chttp-trigger%2Ccontainer-apps&pivots=programming-language-python).
+
+    - After you made sure you have the Azure Function Core Tools, run the following command:
+        ```shell
+        func start
         ```
 
 These instructions will help you set up and run the ExpenseShare application with ease. Enjoy managing collective expenditures effortlessly!
